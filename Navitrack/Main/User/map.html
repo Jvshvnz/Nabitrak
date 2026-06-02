@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAST Building First Floor - Interactive Evacuation Map</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            background: #fff;
+            padding: 15px 30px;
+            width: 100%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a3c6e;
+            margin: 0;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            color: #333;
+            margin: 5px 0 0 0;
+        }
+        
+        .map-container {
+            position: relative;
+            margin: 20px;
+            background: white;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        svg {
+            width: 1100px;
+            height: 700px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+        }
+        
+        .room {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .room:hover {
+            filter: brightness(1.1);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            pointer-events: none;
+            display: none;
+            z-index: 100;
+            max-width: 200px;
+        }
+        
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 1100px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legend-color {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #333;
+        }
+        
+        .controls {
+            margin: 15px 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 10px 18px;
+            background: #1a3c6e;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        button:hover {
+            background: #2c5a9e;
+        }
+        
+        .info-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 260px;
+            display: none;
+            z-index: 200;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">CAST BUILDING EVACUATION ROUTE</h1>
+        <p class="subtitle">(FIRST FLOOR)</p>
+        <div style="position:absolute; top:15px; right:30px; font-size:12px;">
+            <strong>Mapagasian State University</strong><br>1979
+        </div>
+    </div>
+    
+    <div class="map-container">
+        <svg id="floorMap" width="1100" height="680" viewBox="0 0 1100 680"></svg>
+        
+        <!-- Tooltip -->
+        <div id="tooltip" class="tooltip"></div>
+        
+        <!-- Info Panel -->
+        <div id="infoPanel" class="info-panel">
+            <h3 id="roomTitle"></h3>
+            <p id="roomDesc"></p>
+            <button onclick="closeInfo()">Close</button>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button onclick="highlightExits()">🔴 Highlight Emergency Exits</button>
+        <button onclick="resetMap()">Reset Map</button>
+        <button onclick="showLegend()">Show Legend</button>
+    </div>
+    
+    <div class="legend" id="legendPanel">
+        <h3 style="grid-column: span 2; text-align:center; margin:0 0 15px 0;">LEGEND</h3>
+        <!-- Colors will be populated by JS -->
+    </div>
+
+    <script>
+        // SVG namespace
+        const svg = document.getElementById('floorMap');
+        const ns = "http://www.w3.org/2000/svg";
+        
+        // Room data based on the map
+        const rooms = [
+            // Computer Lab 1 (Blue)
+            {id: "lab1", name: "COMPUTER LABORATORY 1", x: 180, y: 220, width: 220, height: 140, color: "#1e4d8c", type: "lab"},
+            // Computer Lab 2 (Blue)
+            {id: "lab2", name: "COMPUTER LABORATORY 2 (IMAC)", x: 620, y: 220, width: 220, height: 140, color: "#1e4d8c", type: "lab"},
+            
+            // IT Faculty Office (Green)
+            {id: "itOffice", name: "IT FACULTY OFFICE", x: 410, y: 100, width: 150, height: 80, color: "#4caf50", type: "office"},
+            
+            // Lobby
+            {id: "lobby", name: "LOBBY", x: 410, y: 190, width: 150, height: 80, color: "#fff", stroke: "#333", type: "common"},
+            
+            // Business Ad Faculty Office (Yellow)
+            {id: "bizAdOffice", name: "BUSINESS AD FACULTY OFFICE", x: 570, y: 100, width: 150, height: 80, color: "#ffeb3b", type: "office"},
+            
+            // Abel Faculty Office
+            {id: "abelOffice", name: "ABEL FACULTY OFFICE", x: 780, y: 80, width: 130, height: 80, color: "#e6d5b8", type: "office"},
+            
+            // Business Incubation (Orange)
+            {id: "bizInc", name: "BUSINESS INCUBATION", x: 120, y: 80, width: 130, height: 110, color: "#ff9800", type: "office"},
+            
+            // Speech Laboratory (Yellow)
+            {id: "speechLab", name: "SPEECH LABORATORY", x: 780, y: 280, width: 130, height: 80, color: "#ffeb3b", type: "lab"},
+            
+            // CAST Rooms
+            {id: "cast1", name: "CAST ROOM 1", x: 80, y: 320, width: 80, height: 80, color: "#e0e0e0", type: "class"},
+            {id: "cast2", name: "CAST ROOM 2", x: 80, y: 410, width: 80, height: 80, color: "#e0e0e0", type: "class"},
+            {id: "cast3", name: "CAST ROOM 3", x: 80, y: 500, width: 80, height: 80, color: "#e0e0e0", type: "class"},
+            {id: "cast4", name: "CAST ROOM 4", x: 280, y: 480, width: 100, height: 80, color: "#e0e0e0", type: "class"},
+            {id: "cast5", name: "CAST ROOM 5", x: 280, y: 380, width: 100, height: 80, color: "#e0e0e0", type: "class"},
+            
+            // Other rooms
+            {id: "bpaOffice", name: "BPA FACULTY OFFICE", x: 80, y: 580, width: 100, height: 70, color: "#8b4513", type: "office"},
+            {id: "deanOffice", name: "OFFICE OF THE COLLEGE DEAN", x: 80, y: 200, width: 80, height: 110, color: "#c8a2c8", type: "office"},
+            
+            // Restrooms
+            {id: "cr", name: "COMFORT ROOMS", x: 20, y: 80, width: 80, height: 110, color: "#81d4fa", type: "comfort"},
+            
+            // Stock Room
+            {id: "stock", name: "STOCK ROOM", x: 20, y: 200, width: 80, height: 40, color: "#4caf50", type: "storage"},
+        ];
+        
+        // Draw the map
+        function createMap() {
+            svg.innerHTML = '';
+            
+            // Background walls / corridors
+            const corridor = document.createElementNS(ns, 'rect');
+            corridor.setAttribute('x', '160');
+            corridor.setAttribute('y', '180');
+            corridor.setAttribute('width', '720');
+            corridor.setAttribute('height', '220');
+            corridor.setAttribute('fill', '#e8f0f8');
+            corridor.setAttribute('stroke', '#333');
+            corridor.setAttribute('stroke-width', '8');
+            svg.appendChild(corridor);
+            
+            // Main horizontal corridor
+            const mainCorridor = document.createElementNS(ns, 'rect');
+            mainCorridor.setAttribute('x', '80');
+            mainCorridor.setAttribute('y', '340');
+            mainCorridor.setAttribute('width', '920');
+            mainCorridor.setAttribute('height', '80');
+            mainCorridor.setAttribute('fill', '#e8f0f8');
+            mainCorridor.setAttribute('stroke', '#333');
+            mainCorridor.setAttribute('stroke-width', '6');
+            svg.appendChild(mainCorridor);
+            
+            // Draw rooms
+            rooms.forEach(room => {
+                const rect = document.createElementNS(ns, 'rect');
+                rect.setAttribute('x', room.x);
+                rect.setAttribute('y', room.y);
+                rect.setAttribute('width', room.width);
+                rect.setAttribute('height', room.height);
+                rect.setAttribute('fill', room.color);
+                rect.setAttribute('stroke', '#222');
+                rect.setAttribute('stroke-width', '4');
+                rect.setAttribute('rx', '8');
+                rect.setAttribute('class', 'room');
+                rect.setAttribute('data-id', room.id);
+                
+                rect.addEventListener('click', () => showRoomInfo(room));
+                rect.addEventListener('mousemove', (e) => showTooltip(e, room.name));
+                rect.addEventListener('mouseleave', hideTooltip);
+                
+                svg.appendChild(rect);
+                
+                // Room label
+                const text = document.createElementNS(ns, 'text');
+                text.setAttribute('x', room.x + room.width/2);
+                text.setAttribute('y', room.y + room.height/2 + 5);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('fill', '#111');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = room.name.split(' ').slice(0, 2).join(' ');
+                svg.appendChild(text);
+            });
+            
+            // Emergency Exits (Red doors)
+            const exits = [
+                {x: 280, y: 380}, {x: 580, y: 240}, {x: 580, y: 320},
+                {x: 780, y: 380}, {x: 780, y: 520}, {x: 320, y: 580}
+            ];
+            
+            exits.forEach(exit => {
+                const door = document.createElementNS(ns, 'rect');
+                door.setAttribute('x', exit.x);
+                door.setAttribute('y', exit.y);
+                door.setAttribute('width', '30');
+                door.setAttribute('height', '25');
+                door.setAttribute('fill', '#d32f2f');
+                door.setAttribute('stroke', '#fff');
+                svg.appendChild(door);
+                
+                const label = document.createElementNS(ns, 'text');
+                label.setAttribute('x', exit.x + 15);
+                label.setAttribute('y', exit.y + 40);
+                label.setAttribute('text-anchor', 'middle');
+                label.setAttribute('font-size', '10');
+                label.setAttribute('fill', '#d32f2f');
+                label.textContent = 'EXIT';
+                svg.appendChild(label);
+            });
+            
+            // Current Location Star
+            const star = document.createElementNS(ns, 'text');
+            star.setAttribute('x', '520');
+            star.setAttribute('y', '310');
+            star.setAttribute('font-size', '40');
+            star.setAttribute('fill', '#ffd700');
+            star.textContent = '★';
+            svg.appendChild(star);
+        }
+        
+        function showTooltip(e, text) {
+            const tooltip = document.getElementById('tooltip');
+            tooltip.style.display = 'block';
+            tooltip.textContent = text;
+            tooltip.style.left = (e.pageX + 15) + 'px';
+            tooltip.style.top = (e.pageY - 30) + 'px';
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltip').style.display = 'none';
+        }
+        
+        function showRoomInfo(room) {
+            const panel = document.getElementById('infoPanel');
+            document.getElementById('roomTitle').textContent = room.name;
+            document.getElementById('roomDesc').innerHTML = `
+                <strong>Type:</strong> ${room.type.toUpperCase()}<br>
+                <strong>Status:</strong> <span style="color:green">Safe for evacuation</span><br><br>
+                <em>Click highlighted exits to follow evacuation route.</em>
+            `;
+            panel.style.display = 'block';
+        }
+        
+        function closeInfo() {
+            document.getElementById('infoPanel').style.display = 'none';
+        }
+        
+        function highlightExits() {
+            const exits = document.querySelectorAll('rect[fill="#d32f2f"]');
+            exits.forEach(exit => {
+                exit.style.animation = 'pulse 1s infinite';
+            });
+            
+            // Add pulse animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes pulse {
+                    0% { transform: scale(1); }
+                    50% { transform: scale(1.15); }
+                    100% { transform: scale(1); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            setTimeout(() => {
+                alert("Emergency exits highlighted in red. Follow the arrows to nearest exit.");
+            }, 300);
+        }
+        
+        function resetMap() {
+            createMap();
+        }
+        
+        function showLegend() {
+            const legendPanel = document.getElementById('legendPanel');
+            legendPanel.innerHTML = `
+                <h3 style="grid-column: span 2; text-align:center; margin:0 0 15px 0;">LEGEND</h3>
+                
+                <div class="legend-item"><div class="legend-color" style="background:#1e4d8c"></div><span>Computer Laboratories</span></div>
+                <div class="legend-item"><div class="legend-color" style="background:#4caf50"></div><span>Classrooms / Offices</span></div>
+                <div class="legend-item"><div class="legend-color" style="background:#ffeb3b"></div><span>Speech / Business Labs</span></div>
+                <div class="legend-item"><div class="legend-color" style="background:#ff9800"></div><span>Business Incubation</span></div>
+                <div class="legend-item"><div class="legend-color" style="background:#81d4fa"></div><span>Comfort Rooms</span></div>
+                <div class="legend-item"><div class="legend-color" style="background:#d32f2f"></div><span>Emergency Exit</span></div>
+                <div class="legend-item"><span>★ Current Location</span></div>
+            `;
+        }
+        
+        // Initialize
+        window.onload = function() {
+            createMap();
+            
+            // Add title text to SVG
+            const title = document.createElementNS(ns, 'text');
+            title.setAttribute('x', '550');
+            title.setAttribute('y', '45');
+            title.setAttribute('text-anchor', 'middle');
+            title.setAttribute('font-size', '22');
+            title.setAttribute('font-weight', 'bold');
+            title.setAttribute('fill', '#1a3c6e');
+            title.textContent = 'CAST BUILDING - FIRST FLOOR';
+            svg.appendChild(title);
+        };
+    </script>
+</body>
+</html>

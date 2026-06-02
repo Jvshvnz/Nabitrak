@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navi Track • Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body class="hero-bg min-h-screen flex items-center justify-center overflow-y-auto relative text-white">
+
+    <!-- Animated Background Blobs -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-15%] left-[-10%] w-[500px] h-[500px] bg-cyan-400 rounded-full mix-blend-screen filter blur-[120px] opacity-20 blob" style="animation-delay: 0s;"></div>
+        <div class="absolute bottom-[-20%] right-[-15%] w-[600px] h-[600px] bg-blue-500 rounded-full mix-blend-screen filter blur-[130px] opacity-20 blob" style="animation-delay: -8s;"></div>
+        <div class="absolute top-[40%] right-[20%] w-[400px] h-[400px] bg-indigo-400 rounded-full mix-blend-screen filter blur-[110px] opacity-10 blob" style="animation-delay: -15s;"></div>
+    </div>
+
+    <!-- Subtle Grid Overlay -->
+    <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:60px_60px] opacity-30"></div>
+
+    <div class="max-w-[480px] w-full mx-auto px-6 relative z-10 py-8">
+        
+        <!-- Register Card -->
+        <div class="glass-card rounded-3xl shadow-2xl p-10 pb-9 glow-cyan">
+            
+            <!-- Logo -->
+            <div class="flex justify-center mb-8">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-14 h-14 rounded-2xl overflow-hidden shadow-inner border border-white/10">
+                        <img 
+                            src="Logoo.png" 
+                            alt="Navi Track Logo" 
+                            class="w-full h-full object-cover"
+                        >
+                    </div>
+                    <div class="heading-font">
+                        <span class="block text-3xl font-semibold tracking-[-2px]">
+                            Navi Track
+                        </span>
+                        <span class="block text-[10px] text-cyan-300 -mt-1 tracking-[1px] uppercase">
+                            Pangasinan State University Bayambang Campus
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Headline -->
+            <div class="text-center mb-9">
+                <h1 class="heading-font text-4xl font-semibold tracking-tighter mb-2">Create Account</h1>
+                <p class="text-slate-400 text-[15.5px]">Join Navi Track for Smart Campus Access</p>
+            </div>
+
+            <!-- Form -->
+            <form id="signupForm" onsubmit="handleSignup(event)" class="space-y-5">
+                
+                <!-- Full Name -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Full Name <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <input type="text" id="fullName" name="fullName"
+                               class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="Joshua Vince Junio II" required>
+                    </div>
+                </div>
+
+                <!-- Username (Optional) -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Username <span class="text-xs text-slate-500">(optional)</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-at"></i>
+                        </div>
+                        <input type="text" id="username" name="username"
+                               class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="joshuavincejunioii">
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Email Address <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <input type="email" id="email" name="email"
+                               class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="caralos@psu.edu.ph" required>
+                    </div>
+                </div>
+
+                <!-- Employee ID (Optional) -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Employee ID <span class="text-xs text-slate-500">(Required)</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <input type="text" id="employeeId" name="employeeId"
+                               class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="24-BGU-0318">
+                    </div>
+                </div>
+
+                <!-- Course / Department -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Department <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <select id="course" name="course"
+                                class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base text-white focus:outline-none appearance-none cursor-pointer"
+                                required>
+                            <option value="" class="bg-slate-800">Select Department</option>
+                            <option value="BSIT" class="bg-slate-800">BSIT</option>
+                            <option value="BSBA" class="bg-slate-800">BSBA</option>
+                            <option value="ABEL" class="bg-slate-800">ABEL</option>
+                            <option value="BPA" class="bg-slate-800">BPA</option>
+                        </select>
+                        <div class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none">
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Phone Number -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Phone Number <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <input type="tel" id="phone" name="phone"
+                               class="input-field w-full pl-12 pr-5 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="Enter Phone Number">
+                    </div>
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Password <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <input type="password" id="password" name="password"
+                               class="input-field w-full pl-12 pr-12 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="••••••••" required>
+                        <button type="button" onclick="togglePassword('password', 'eye-icon')" 
+                                class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors">
+                            <i class="fa-solid fa-eye" id="eye-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div>
+                    <label class="block text-sm text-slate-400 mb-2 font-medium">Confirm Password <span class="text-cyan-400">*</span></label>
+                    <div class="relative group">
+                        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-cyan-400 transition-colors">
+                            <i class="fa-solid fa-lock"></i>
+                        </div>
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                               class="input-field w-full pl-12 pr-12 py-4 rounded-2xl text-base placeholder-slate-500 focus:outline-none"
+                               placeholder="••••••••" required>
+                        <button type="button" onclick="togglePassword('confirmPassword', 'eye-confirm-icon')" 
+                                class="absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors">
+                            <i class="fa-solid fa-eye" id="eye-confirm-icon"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Terms Checkbox -->
+                <div class="pt-2">
+                    <label class="flex items-start gap-2 cursor-pointer">
+                        <input type="checkbox" id="terms" name="terms" class="w-4 h-4 mt-0.5 accent-cyan-400 bg-white/10 border-white/30 rounded" required>
+                        <span class="text-sm text-slate-400">
+                            I agree to the <a href="#" class="text-cyan-400 hover:underline">Terms of Service</a> and <a href="#" class="text-cyan-400 hover:underline">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Signup Button -->
+                <button type="submit"
+                        class="w-full mt-4 py-4 bg-gradient-to-r from-[#3B82F6] to-[#22D3EE] hover:brightness-110 active:scale-[0.985] transition-all font-semibold text-base rounded-2xl shadow-xl shadow-cyan-500/30 flex items-center justify-center gap-x-3 group">
+                    <span>Create Account</span>
+                    <i class="fa-solid fa-arrow-right transition-transform group-active:translate-x-1"></i>
+                </button>
+            </form>
+
+            <!-- Footer -->
+            <div class="mt-8 text-center">
+                <p class="text-xs text-slate-500">
+                    Already have an Account?  
+                    <a href="login.html" class="text-cyan-400 hover:underline">Sign In</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Trust Line -->
+        <div class="flex justify-center items-center gap-x-6 mt-8 text-[10px] text-slate-500 tracking-widest">
+            <div class="flex items-center gap-1.5">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>Pangasinan State University Bayambang Campus</span>
+            </div>
+            <div class="w-px h-3 bg-white/20"></div>
+            <div>© 2026 Navi Track | All Rights Reserved</div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 glass-card rounded-3xl px-6 py-4 flex items-center gap-x-4 border border-white/20 shadow-2xl">
+        <div class="w-8 h-8 rounded-2xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <p class="font-medium">Account created successfully</p>
+            <p class="text-xs text-slate-400">Redirecting to login...</p>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Password Visibility
+        function togglePassword(inputId, iconId) {
+            const passwordInput = document.getElementById(inputId);
+            const eyeIcon = document.getElementById(iconId);
+
+            if (!passwordInput || !eyeIcon) return;
+
+            const isPassword = passwordInput.type === 'password';
+
+            passwordInput.type = isPassword ? 'text' : 'password';
+
+            eyeIcon.classList.toggle('fa-eye');
+            eyeIcon.classList.toggle('fa-eye-slash');
+        }
+
+        // Handle Signup
+        function handleSignup(event) {
+            event.preventDefault();
+
+            const form = event.target;
+            const button = form.querySelector('button[type="submit"]');
+
+            if (!button) return;
+
+            const originalContent = button.innerHTML;
+
+            // Validate passwords match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert('⚠️ Passwords do not match!\n\nPlease try again.');
+                return;
+            }
+
+            // Loading State
+            button.innerHTML = `
+                <div class="flex items-center justify-center gap-2">
+                    <svg class="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24">
+                        <circle
+                            class="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            stroke-width="4">
+                        </circle>
+                        <path
+                            class="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 
+                            0 0 5.373 0 12h4z">
+                        </path>
+                    </svg>
+                    <span>Creating Account...</span>
+                </div>
+            `;
+
+            button.disabled = true;
+            button.classList.add('opacity-80', 'cursor-not-allowed');
+
+            // Fake Signup Delay
+            setTimeout(() => {
+                button.innerHTML = originalContent;
+                button.disabled = false;
+                button.classList.remove('opacity-80', 'cursor-not-allowed');
+
+                // Toast
+                const toast = document.getElementById('successToast');
+
+                if (toast) {
+                    toast.classList.remove('hidden', 'translate-y-10', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+
+                    // Auto Hide
+                    setTimeout(() => {
+                        toast.classList.add('translate-y-10', 'opacity-0');
+                        setTimeout(() => {
+                            toast.classList.add('hidden');
+                        }, 300);
+                    }, 2500);
+                }
+
+                // Demo Alert
+                setTimeout(() => {
+                    alert(
+                        "🎉 Account Created Successfully!\n\n" +
+                        "Welcome to Navi Track - Pangasinan State University Bayambang Campus.\n\n" +
+                        "You will now be redirected to the login page."
+                    );
+                    // window.location.href = 'login.html';
+                }, 800);
+
+            }, 1800);
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            // Autofocus Input
+            const fullNameInput = document.getElementById('fullName');
+
+            if (fullNameInput) {
+                setTimeout(() => {
+                    fullNameInput.focus();
+                }, 500);
+            }
+
+            // Console Branding
+            console.log(
+                '%c✨ Navi Track Signup UI Ready',
+                `color:#22D3EE;font-size:14px;font-family:Inter,sans-serif;font-weight:600;`
+            );
+
+            console.log(
+                '%cUltra-premium Apple-inspired aesthetic initialized.',
+                `color:#94A3B8;font-size:12px;font-family:Inter,sans-serif;`
+            );
+        });
+    </script>
+</body>
+</html>

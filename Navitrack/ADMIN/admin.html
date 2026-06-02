@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navi Track • Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="adminstyle.css">
+    
+</head>
+<body class="bg-[#0A2540] text-white min-h-screen">
+    <!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+    <!-- ==================== LOADING SCREEN ==================== -->
+    <div id="loading-screen">
+        <div class="loader-glow"></div>
+        <div class="loader-container">
+            <div class="compass-ring">
+                <svg viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="56" cy="56" r="50" stroke="#E8B923" stroke-width="1.5"
+                        stroke-dasharray="6 4" stroke-linecap="round" opacity="0.5"/>
+                    <rect x="54.5" y="4"   width="3" height="8" rx="1.5" fill="#E8B923" opacity="0.9"/>
+                    <rect x="54.5" y="100" width="3" height="8" rx="1.5" fill="#E8B923" opacity="0.4"/>
+                    <rect x="4"   y="54.5" width="8" height="3" rx="1.5" fill="#E8B923" opacity="0.4"/>
+                    <rect x="100" y="54.5" width="8" height="3" rx="1.5" fill="#E8B923" opacity="0.4"/>
+                </svg>
+                <div class="compass-inner">
+                    <div style="position:relative;width:100%;height:100%;">
+                        <div class="needle needle-north"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="brand-title">Navi Track</div>
+            <div class="brand-sub">Admin Portal</div>
+            <div class="progress-area">
+                <div class="progress-label">
+                    <span id="status-text">Initializing</span>
+                    <span id="pct-text">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            <div class="loader-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ADMIN PANEL ==================== -->
+    <div id="admin-panel" class="hidden">
+
+        <!-- Sidebar -->
+        <div class="fixed left-0 top-0 h-screen w-72 bg-[#001A33] border-r border-white/10 p-8 flex flex-col">
+            <div class="flex items-center gap-x-3 mb-16">
+                <div class="w-11 h-11 bg-[#E8B923] rounded-3xl flex items-center justify-center rotate-12">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995 -8.336zm-5 14.66a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m3.684 -10.949l-6 2a1 1 0 0 0 -.633 .633l-2.007 6.026l-.023 .086l-.017 .113l-.004 .068v.044l.009 .111l.012 .07l.04 .144l.045 .1l.054 .095l.064 .09l.069 .075l.084 .074l.098 .07l.1 .054l.078 .033l.105 .033l.109 .02l.043 .005l.068 .004h.044l.111 -.009l.07 -.012l.02 -.006l.019 -.002l.074 -.022l6 -2a1 1 0 0 0 .633 -.633l2 -6a1 1 0 0 0 -1.265 -1.265zm-1.265 2.529l-1.21 3.629l-3.629 1.21l1.21 -3.629l3.629 -1.21zm-9.419 1.42a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m14 0a1 1 0 1 0 0 2a1 1 0 0 0 0 -2m-7 -7a1 1 0 1 0 0 2a1 1 0 0 0 0 -2"/>
+                    </svg>
+                </div>
+                <h1 class="display-font text-3xl tracking-[-1px]">Navi Track</h1>
+            </div>
+
+            <nav class="flex-1 space-y-2">
+                <a onclick="showPage('dashboard')" class="admin-nav-item active flex items-center gap-x-4 px-6 py-4 rounded-2xl cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 0 1-1.125-1.125v-3.75ZM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-8.25ZM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 0 1-1.125-1.125v-2.25Z"/>
+                    </svg>
+                    <span class="font-medium">Dashboard</span>
+                </a>
+                <a onclick="showPage('users')" class="admin-nav-item flex items-center gap-x-4 px-6 py-4 rounded-2xl cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
+                    </svg>
+                    <span class="font-medium">Total Users</span>
+                </a>
+                <a onclick="showPage('rooms')" class="admin-nav-item flex items-center gap-x-4 px-6 py-4 rounded-2xl cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 21v-7.5a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75V21m-4.5 0H2.36m11.14 0H18m0 0h3.64m-1.39 0V9.349M3.75 21V9.349m0 0a3.001 3.001 0 0 0 3.75-.615A2.993 2.993 0 0 0 9.75 9.75c.896 0 1.7-.393 2.25-1.016a2.993 2.993 0 0 0 2.25 1.016c.896 0 1.7-.393 2.25-1.015a3.001 3.001 0 0 0 3.75.614m-16.5 0a3.004 3.004 0 0 1-.621-4.72l1.189-1.19A1.5 1.5 0 0 1 5.378 3h13.243a1.5 1.5 0 0 1 1.06.44l1.19 1.189a3 3 0 0 1-.621 4.72M6.75 18h3.75a.75.75 0 0 0 .75-.75V13.5a.75.75 0 0 0-.75-.75H6.75a.75.75 0 0 0-.75.75v3.75c0 .414.336.75.75.75Z"/>
+                    </svg>
+                    <span class="font-medium">Total Rooms Managed</span>
+                </a>
+                <a onclick="showPage('schedule')" class="admin-nav-item flex items-center gap-x-4 px-6 py-4 rounded-2xl cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 2.994v2.25m10.5-2.25v2.25m-14.252 13.5V7.491a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v11.251m-18 0a2.25 2.25 0 0 0 2.25 2.25h13.5a2.25 2.25 0 0 0 2.25-2.25m-18 0v-7.5a2.25 2.25 0 0 1 2.25-2.25h13.5a2.25 2.25 0 0 1 2.25 2.25v7.5m-6.75-6h2.25m-9 2.25h4.5m.002-2.25h.005v.006H12v-.006Zm-.001 4.5h.006v.006h-.006v-.005Zm-2.25.001h.005v.006H9.75v-.006Zm-2.25 0h.005v.005h-.006v-.005Zm6.75-2.247h.005v.005h-.005v-.005Zm0 2.247h.006v.006h-.006v-.006Zm2.25-2.248h.006V15H16.5v-.005Z"/>
+                    </svg>
+                    <span class="font-medium">Schedules (BSIT only)</span>
+                </a>
+            </nav>
+
+            <button onclick="window.location.href='../Sys_Login/logout.php'"
+                    class="mt-auto w-full py-4 border border-white/30 hover:border-red-400 hover:text-red-400 rounded-2xl text-sm font-medium transition">
+                Logout
+            </button>
+        </div>
+
+        <!-- Main Content -->
+        <div class="ml-72 p-10">
+
+            <!-- DASHBOARD PAGE -->
+            <div id="page-dashboard" class="page">
+                <h1 class="display-font text-5xl tracking-[-1px] mb-12">Dashboard</h1>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mb-4 text-white/50">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
+                        </svg>
+                        <div class="text-6xl font-bold text-[#E8B923]">15</div>
+                        <div class="text-white/70 mt-1">Total Users</div>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mb-4 text-white/50">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 21v-8.25M15.75 21v-8.25M8.25 21v-8.25M3 9l9-6 9 6m-1.5 12V10.332A48.36 48.36 0 0 0 12 9.75c-2.551 0-5.056.2-7.5.582V21M3 21h18M12 6.75h.008v.008H12V6.75Z"/>
+                        </svg>
+                        <div class="text-6xl font-bold text-[#E8B923]">1</div>
+                        <div class="text-white/70 mt-1">Rooms Managed</div>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mb-4 text-white/50">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+                        </svg>
+                        <div class="text-6xl font-bold text-[#E8B923]">0</div>
+                        <div class="text-white/70 mt-1">Schedules Today</div>
+                    </div>
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mb-4 text-white/50">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M8 16l2 -6l6 -2l-2 6l-6 2"/>
+                            <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/>
+                        </svg>
+                        <div class="text-6xl font-bold text-[#E8B923]">0</div>
+                        <div class="text-white/70 mt-1">Users Online</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- USERS PAGE -->
+            <div id="page-users" class="page hidden">
+                <div class="flex justify-between items-center mb-10">
+                    <h1 class="display-font text-5xl tracking-[-1px]">Users Management</h1>
+                </div>
+                <input type="text" id="user-search" oninput="searchUsers()"
+                       placeholder="Search by name, ID or email..."
+                       class="w-full max-w-xl px-6 py-4 bg-white/10 border border-white/20 rounded-3xl outline-none focus:border-[#E8B923] mb-8">
+                <div class="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/5">
+                                <th class="text-left p-6 text-white/60 font-medium">User ID</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Name</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Role</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Email</th>
+                                <th class="text-center p-6 text-white/60 font-medium">Status</th>
+                                <th class="text-center p-6 text-white/60 font-medium">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ROOMS PAGE -->
+            <div id="page-rooms" class="page hidden">
+                <div class="flex justify-between items-center mb-10">
+                    <h1 class="display-font text-5xl tracking-[-1px]">Room List</h1>
+                    <button onclick="openRoomModal()"
+                            class="px-8 py-4 bg-[#E8B923] text-[#0A2540] font-semibold rounded-3xl hover:bg-white transition">
+                        + Add New Room
+                    </button>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/5">
+                                <th class="text-left p-6 text-white/60 font-medium">Room ID</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Room Name</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Building</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Capacity</th>
+                                <th class="text-center p-6 text-white/60 font-medium">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rooms-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SCHEDULE PAGE -->
+            <div id="page-schedule" class="page hidden">
+                <div class="flex justify-between items-center mb-10">
+                    <h1 class="display-font text-5xl tracking-[-1px]">Schedule Management</h1>
+                    <button onclick="openScheduleModal()"
+                            class="px-8 py-4 bg-[#E8B923] text-[#0A2540] font-semibold rounded-3xl hover:bg-white transition">
+                        + Add New Schedule
+                    </button>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b border-white/10 bg-white/5">
+                                <th class="text-left p-6 text-white/60 font-medium">Schedule ID</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Room Name</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Subject</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Instructor</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Day</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Time In</th>
+                                <th class="text-left p-6 text-white/60 font-medium">Time Out</th>
+                            </tr>
+                        </thead>
+                        <tbody id="schedule-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ===== MODAL: ADD NEW ROOM ===== -->
+    <div id="modal-room" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-room')">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Add New Room</div>
+                    <div class="modal-subtitle">Fill in room details below</div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('modal-room')">✕</button>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-form-grid">
+                <div>
+                    <div class="modal-label">Room Name</div>
+                    <input class="modal-input" type="text" id="room-name" placeholder="e.g. Room 106">
+                </div>
+                <div>
+                    <div class="modal-label">Building</div>
+                    <select class="modal-input" id="room-building">
+                        <option value="">— Select Building —</option>
+                        <option>CAST Building</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="modal-label">Course ID</div>
+                    <select class="modal-input" id="room-course">
+                        <option value="">— Select Course —</option>
+                        <option>BSIT</option>
+                        <option>BSBA</option>
+                        <option>BPA</option>
+                        <option>ABEL</option>
+                    </select>
+                </div>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="closeModal('modal-room')">Cancel</button>
+                <button class="modal-btn-save" onclick="submitRoom()">Save Room</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL: ADD NEW SCHEDULE ===== -->
+    <div id="modal-schedule" class="modal-overlay" onclick="closeOnOverlay(event, 'modal-schedule')">
+        <div class="modal-box modal-box-wide">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Add New Schedule</div>
+                    <div class="modal-subtitle">Fill in schedule details below</div>
+                </div>
+                <button class="modal-close-btn" onclick="closeModal('modal-schedule')">✕</button>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-form-grid">
+                <div>
+                    <div class="modal-label">Room Name</div>
+                    <select class="modal-input" id="sched-room">
+                        <option value="">— Select Room —</option>
+                        <option>Room 106</option>
+                        <option>Room 107</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="modal-label">Subject</div>
+                    <select class="modal-input" id="sched-subject">
+                        <option value="">— Select Subject —</option>
+                        <option>BYIAS101</option>
+                        <option>CC102</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="modal-label">Instructor</div>
+                    <select class="modal-input" id="sched-instructor">
+                        <option value="">— Select Instructor —</option>
+                        <option>JANICE C. FRANCISCO, MIT</option>
+                        <option>SARAH JANE M. FERRER, MIT</option>
+                    </select>
+                </div>
+                <div>
+                    <div class="modal-label">Day</div>
+                    <select class="modal-input" id="sched-day">
+                        <option value="">— Select Day —</option>
+                        <option>Monday</option>
+                        <option>Tuesday</option>
+                        <option>Wednesday</option>
+                        <option>Thursday</option>
+                        <option>Friday</option>
+                    </select>
+                </div>
+                <div class="modal-time-row">
+                    <div>
+                        <div class="modal-label">Time In</div>
+                        <input class="modal-input" type="time" id="sched-timein">
+                    </div>
+                    <div>
+                        <div class="modal-label">Time Out</div>
+                        <input class="modal-input" type="time" id="sched-timeout">
+                    </div>
+                </div>
+            </div>
+            <hr class="modal-divider">
+            <div class="modal-actions">
+                <button class="modal-btn-cancel" onclick="closeModal('modal-schedule')">Cancel</button>
+                <button class="modal-btn-save" onclick="submitSchedule()">Save Schedule</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="adminmain.js"></script>
+</body>
+</html>

@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Campus Nav — PSU's official web room locator, scheduling system, and laboratory attendance & monitoring platform.">
+    <title>Navi Track • User</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="user.css">
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="scanner.css">
+</head>
+<body class="bg-[#0A2540] text-white overflow-x-hidden">
+    <!-- Custom cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- ══════════════════════════════════════
+         LOADING SCREEN
+    ══════════════════════════════════════ -->
+    <div id="loading-screen">
+        <div class="ls-grid-bg"></div>
+        <div class="ls-glow"></div>
+        <div class="ls-content">
+            <div class="ls-compass">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="46" stroke="#E8B923" stroke-width="1.5" stroke-dasharray="6 4" />
+                    <circle cx="50" cy="50" r="38" stroke="rgba(232,185,35,0.3)" stroke-width="0.5"/>
+                </svg>
+                <div class="ls-compass-inner">
+                    <div class="ls-needle"></div>
+                </div>
+            </div>
+            <div class="ls-brand">Navi Track</div>
+            <div class="ls-sub">PANGASINAN STATE UNIVERSITY</div>
+            <div class="ls-progress-wrap">
+                <div class="ls-progress-meta">
+                    <span id="ls-status" class="ls-status-text">Initializing</span>
+                    <span id="ls-pct" class="ls-pct-text">0%</span>
+                </div>
+                <div class="ls-track">
+                    <div id="ls-fill" class="ls-fill"></div>
+                </div>
+            </div>
+            <div class="ls-dots">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         NAVBAR
+    ══════════════════════════════════════ -->
+    <nav id="main-nav">
+        <div class="nav-inner">
+            <div class="nav-left">
+                <div class="nav-logo">
+                    <div class="nav-logo-icon">📍</div>
+                    <span class="nav-logo-text">Navi Track</span>
+                </div>
+                <div class="nav-badge">
+                    <span class="nav-badge-dot"></span>
+                    PSU Bayambang Campus
+                </div>
+            </div>
+
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#room-locator" class="nav-link">Room Verificator</a>
+                <a href="#block-schedule" class="nav-link">Block Schedule</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+
+            <!-- PROFILE BUTTON (replaces Login) -->
+            <button class="profile-nav-btn" onclick="openProfileOverlay()">
+                <div class="profile-nav-avatar">MR</div>
+                <div class="profile-nav-info">
+                    <span class="profile-nav-name">Maria R. Santos</span>
+                    <span class="profile-nav-role">Instructor I</span>
+                </div>
+                <i class="fas fa-chevron-down profile-nav-chevron"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════
+         PROFILE OVERLAY
+    ══════════════════════════════════════ -->
+    <div id="profile-overlay" class="profile-overlay" onclick="handleOverlayClick(event)">
+        <div class="profile-panel" id="profile-panel">
+
+            <!-- Close -->
+            <button class="profile-close-btn" onclick="closeProfileOverlay()">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Ambient orbs -->
+            <div class="profile-orb profile-orb-1"></div>
+            <div class="profile-orb profile-orb-2"></div>
+
+            <!-- ── PROFILE HEADER ── -->
+            <div class="profile-header">
+                <div class="profile-avatar-wrap">
+                    <div class="profile-avatar-ring"></div>
+                    <div class="profile-avatar-outer">
+                        <div class="profile-avatar">MP</div>
+                    </div>
+                    <div class="profile-avatar-status"></div>
+                </div>
+
+                <div class="profile-header-info">
+                    <div class="profile-verify-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        Verified Faculty
+                    </div>
+                    <h2 class="profile-full-name">Michael Peoro</h2>
+                    <p class="profile-position-title">Instructor I</p>
+                    <p class="profile-department">Department of Information Technology<br>College of Computer and Arts and Sciences Technology</p>
+                    <div class="profile-id-row">
+                        <span class="profile-id-label">Faculty ID</span>
+                        <span class="profile-id-value">PSU-@example-2019-0087</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="profile-divider"></div>
+
+            <!-- ── CONTACT DETAILS GRID ── -->
+            <div class="profile-details-label">Contact & Employment Details</div>
+            <div class="profile-details-grid">
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Email Address</span>
+                        <span class="pdc-value">mr.peoroexample@psu.edu.ph</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Contact Number</span>
+                        <span class="pdc-value">+63 917 845 2210</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-id-badge"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Employee ID</span>
+                        <span class="pdc-value mono">2019-0087</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Department</span>
+                        <span class="pdc-value">BSIT</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Position / Rank</span>
+                        <span class="pdc-value">Instructor I</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Role</span>
+                        <span class="pdc-value">Program Coordinator</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Campus</span>
+                        <span class="pdc-value">PSU Bayambang</span>
+                    </div>
+                </div>
+
+                <div class="profile-detail-card">
+                    <div class="pdc-icon-wrap">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="pdc-text">
+                        <span class="pdc-label">Academic Year</span>
+                        <span class="pdc-value">A.Y. 2025–2026</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── ACTIVE SCHEDULE STRIP ── -->
+            <div class="profile-schedule-strip">
+                <div class="pss-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="pss-text">
+                    <span class="pss-label">Currently Teaching</span>
+                    <span class="pss-value">SAD 101 — System Analysis &amp; Design &nbsp;·&nbsp; Mon/Wed 4:00–5:00 &nbsp;·&nbsp; Room 104</span>
+                </div>
+                <div class="pss-live">
+                    <span class="pss-live-dot"></span>
+                    LIVE
+                </div>
+            </div>
+
+            <!-- ── ACTIONS ── -->
+            <div class="profile-actions">
+                <button class="profile-btn-edit">
+                    <i class="fas fa-pen"></i>
+                    Edit Profile
+                </button>
+                <button class="profile-btn-schedule" onclick="closeProfileOverlay(); document.getElementById('block-schedule').scrollIntoView({behavior:'smooth'})">
+                    <i class="fas fa-calendar-week"></i>
+                    My Schedule
+                </button>
+                <button class="profile-btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         HOME SECTION
+    ══════════════════════════════════════ -->
+    <section id="home">
+        <div class="hero-grid"></div>
+        <div class="hero-orb hero-orb-1"></div>
+        <div class="hero-orb hero-orb-2"></div>
+        <div class="hero-orb hero-orb-3"></div>
+
+        <div class="hero-wrap">
+            <div class="hero-left">
+                <div class="hero-live-pill">
+                    <span class="live-pulse"></span>
+                    LIVE &nbsp;·&nbsp; Real-time tracking active
+                </div>
+
+                <h1 class="hero-headline">
+                    <span class="hero-word hero-w1">Navigate.</span>
+                    <span class="hero-word hero-w2">Schedule.</span>
+                    <span class="hero-word hero-w3 hero-gold">Monitor.</span>
+                </h1>
+
+                <p class="hero-desc">
+                    PSU's unified campus companion — real-time room discovery,
+                    intelligent scheduling, and QR-based lab attendance for
+                    Bayambang students and faculty.
+                </p>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">169</span>
+                        <span class="hero-stat-label">Students &amp; Faculty</span>
+                    </div>
+                    <div class="hero-stat-div"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">24</span>
+                        <span class="hero-stat-label">Rooms Mapped</span>
+                    </div>
+                    <div class="hero-stat-div"></div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-num">2</span>
+                        <span class="hero-stat-label">Sub-systems</span>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <button onclick="findRoom()" class="btn-primary">
+                        <i class="fas fa-search"></i> Find a Room
+                    </button>
+                    <button onclick="openSchedule()" class="btn-ghost">
+                        <i class="fas fa-calendar-alt"></i> My Schedule
+                    </button>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="hero-card hero-card-clock">
+                    <div class="hcard-label">You are currently here</div>
+                    <div class="hcard-room">Room 104 &nbsp;·&nbsp; Cast Bldg &nbsp;·&nbsp; L1</div>
+                    <div class="hcard-clock-row">
+                        <div class="hcard-clock-icon"><i class="fas fa-clock"></i></div>
+                        <div>
+                            <div id="liveClock" class="hcard-time">00:00:00</div>
+                            <div id="currentDate" class="hcard-date">—</div>
+                        </div>
+                    </div>
+                    <div class="hcard-status-row">
+                        <span class="hcard-chip green"><span class="chip-dot"></span>Available</span>
+                        <span class="hcard-chip amber">3 min walk</span>
+                    </div>
+                </div>
+
+                <div class="hero-card hero-card-map">
+    <div class="hmap-header">
+        <span class="hmap-title">CAST Building — Floor 1</span>
+        <span class="hmap-live">LIVE</span>
+    </div>
+    <div class="hmap-canvas">
+        <img 
+            src="mapmap.jpg" 
+            alt="CAST Building Floor 1 Map" 
+            style="
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                object-position: center;
+                border-radius: 10px;
+                display: block;
+                background: #0A2540
+            "
+        />
+    </div>
+    <div class="hmap-footer">
+        <span onclick="document.getElementById('room-locator').scrollIntoView({behavior:'smooth'})" class="hmap-link">
+            View full map →
+        </span>
+    </div>
+</div>
+
+                <div class="hero-float-tag">
+                    <i class="fas fa-qrcode"></i>
+                    QR Lab Attendance Live
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-scroll-hint">
+            <span>Scroll to explore</span>
+            <i class="fas fa-chevron-down hero-chevron"></i>
+        </div>
+    </section>
+<!-- ====================== QR ROOM SCANNER SECTION ====================== -->
+<section id="room-locator" class="min-h-screen py-12 bg-[#060816]">
+    <div class="max-w-7xl mx-auto px-4 md:px-8">
+
+        <!-- Header -->
+        <div class="mb-8 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-cyan-300 via-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                    Room Verification Scanner
+                </h1>
+                <p class="text-slate-300 mt-2">Scan QR codes outside classrooms to verify room identity</p>
+            </div>
+
+            <div class="glass rounded-2xl px-5 py-3 flex items-center gap-3 bg-white/5 border border-white/10">
+                <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></div>
+                <span class="text-sm text-slate-200" id="liveTime"></span>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+
+            <!-- Scanner -->
+            <div class="xl:col-span-2">
+                <div class="glass rounded-[30px] p-5 md:p-7 bg-white/5 border border-white/10">
+
+                    <div class="flex items-center justify-between mb-6">
+                        <div>
+                            <h2 class="text-2xl font-semibold">Room Verification Scanner</h2>
+                            <p class="text-slate-400 mt-1 text-sm">Point camera at QR code</p>
+                        </div>
+                        <div id="statusBadge" class="status-badge px-4 py-2 rounded-full text-sm font-semibold bg-cyan-500/20 border border-cyan-400/30 text-cyan-300">
+                            Ready
+                        </div>
+                    </div>
+
+                    <div class="scanner-wrapper">
+                        <div class="scanner-frame">
+                            <div id="reader"></div>
+                            <div class="corner tl"></div>
+                            <div class="corner tr"></div>
+                            <div class="corner bl"></div>
+                            <div class="corner br"></div>
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 mt-6">
+                        <button id="startBtn" class="navibtn rounded-2xl bg-cyan-500/20 border border-cyan-400/30 py-4 font-medium">▶ Start Scanner</button>
+                        <button id="stopBtn" class="navibtn rounded-2xl bg-red-500/20 border border-red-400/30 py-4 font-medium" disabled>■ Stop Scanner</button>
+                    </div>
+
+                    <div id="errorBox" class="hidden mt-5 rounded-2xl border border-red-400/30 bg-red-500/10 p-4 text-red-200"></div>
+                </div>
+
+                <!-- Result Panel -->
+                <div id="roomPanel" class="glass rounded-[30px] p-6 mt-6 hidden">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-3xl">✓</div>
+                        <div>
+                            <h2 class="text-2xl font-bold text-emerald-300">Room Verified Successfully</h2>
+                            <p class="text-slate-300 mt-1">QR authentication completed.</p>
+                        </div>
+                    </div>
+                    <div id="roomDetails" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <div class="glass rounded-[30px] p-6 bg-white/5 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-5">Scan History</h3>
+                    <div id="historyList" class="space-y-3 max-h-[500px] overflow-auto"></div>
+                </div>
+
+                <div class="glass rounded-[30px] p-6 bg-white/5 border border-white/10">
+                    <h3 class="text-xl font-semibold mb-4">How to Use</h3>
+                    <ul class="space-y-3 text-sm text-slate-300">
+                        <li class="flex gap-3"><span class="text-cyan-300">01</span> Point camera at room QR code</li>
+                        <li class="flex gap-3"><span class="text-cyan-300">02</span> Verification happens automatically</li>
+                        <li class="flex gap-3"><span class="text-cyan-300">03</span> Room details appear instantly</li>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- ══════════════════════════════════════
+         BLOCK SCHEDULE SECTION
+    ══════════════════════════════════════ -->
+    <div id="block-schedule" class="container mx-auto px-6 py-8">
+        <div class="flex justify-between items-start mb-6 flex-wrap gap-4">
+            <div>
+                <h1 class="display-font text-5xl tracking-[-1px]">Faculty Schedule</h1>
+                <p class="text-white/40 text-sm mt-1">1st Semester · 2025–2026 · Bayambang Campus</p>
+            </div>
+            <div class="flex gap-3 items-center flex-wrap">
+                <button onclick="exportSchedulePDF()" class="px-6 py-3 border border-white/15 text-white/70 font-semibold rounded-3xl hover:bg-white/5 transition text-sm">↓ Export PDF</button>
+            </div>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 mb-5 bg-white/[0.04] border border-white/10 rounded-2xl px-5 py-4">
+            <div class="flex flex-col gap-0.5"><span class="text-[10px] uppercase tracking-widest text-white/40">Faculty</span><span id="sched-faculty-name" class="text-sm font-semibold text-white">—</span></div>
+            <div class="w-px h-7 bg-white/10"></div>
+            <div class="flex flex-col gap-0.5"><span class="text-[10px] uppercase tracking-widest text-white/40">Department</span><span id="sched-dept" class="text-sm font-semibold text-white">—</span></div>
+            <div class="w-px h-7 bg-white/10"></div>
+            <div class="flex flex-col gap-0.5"><span class="text-[10px] uppercase tracking-widest text-white/40">Total Hours</span><span id="sched-hours" class="text-sm font-semibold text-white">—</span></div>
+            <div class="w-px h-7 bg-white/10"></div>
+            <div class="flex flex-col gap-0.5"><span class="text-[10px] uppercase tracking-widest text-white/40">Status</span><span class="text-sm font-semibold text-emerald-400">● Active</span></div>
+            <div class="ml-auto flex items-center gap-3 flex-wrap">
+                <select id="sched-faculty-select" onchange="loadFacultySchedule(this.value)" class="bg-white/[0.06] border border-white/15 text-white text-xs rounded-xl px-3 py-2 appearance-none cursor-pointer min-w-[200px]"></select>
+            </div>
+        </div>
+        <div class="flex gap-2 mb-5 flex-wrap">
+            <button onclick="switchSchedView('grid')" id="tab-grid" class="sched-tab px-5 py-2 rounded-3xl text-xs font-semibold border border-white/10 text-white/60 hover:bg-white/5 transition active-tab">Weekly Grid</button>
+            <button onclick="switchSchedView('list')" id="tab-list" class="sched-tab px-5 py-2 rounded-3xl text-xs font-semibold border border-white/10 text-white/60 hover:bg-white/5 transition">List View</button>
+            <button onclick="switchSchedView('conflicts')" id="tab-conflicts" class="sched-tab px-5 py-2 rounded-3xl text-xs font-semibold border border-white/10 text-white/60 hover:bg-white/5 transition">Room Conflicts</button>
+        </div>
+        <div id="sched-view-grid">
+            <div class="overflow-x-auto rounded-3xl border border-white/10">
+                <table id="sched-timetable" class="w-full border-collapse" style="min-width:860px;">
+                    <thead><tr id="sched-thead-row" class="border-b border-white/10 bg-white/[0.04]"><th class="text-left px-4 py-4 text-[10px] uppercase tracking-widest text-[#E8B923]/70 font-bold w-20">Time</th></tr></thead>
+                    <tbody id="sched-grid-body"></tbody>
+                </table>
+            </div>
+            <div class="flex flex-wrap gap-5 mt-5">
+                <div class="flex items-center gap-2 text-xs text-white/40"><span class="w-3 h-3 rounded-sm bg-[#E8B923]/30 border-l-2 border-[#E8B923] inline-block"></span> GEE / General Ed</div>
+                <div class="flex items-center gap-2 text-xs text-white/40"><span class="w-3 h-3 rounded-sm bg-blue-500/20 border-l-2 border-blue-400 inline-block"></span> Lecture</div>
+                <div class="flex items-center gap-2 text-xs text-white/40"><span class="w-3 h-3 rounded-sm bg-emerald-500/20 border-l-2 border-emerald-400 inline-block"></span> Laboratory</div>
+                <div class="flex items-center gap-2 text-xs text-white/40"><span class="w-3 h-3 rounded-sm bg-purple-500/20 border-l-2 border-purple-400 inline-block"></span> Consultation</div>
+                <div class="flex items-center gap-2 text-xs text-white/40"><span class="w-3 h-3 rounded-sm bg-orange-500/20 border-l-2 border-orange-400 inline-block"></span> Lunch Break</div>
+            </div>
+        </div>
+        <div id="sched-view-list" class="hidden">
+            <div class="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+                <table class="w-full">
+                    <thead><tr class="border-b border-white/10 bg-white/5">
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Schedule ID</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Subject</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Section</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Room</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Day</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Time In</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Time Out</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Type</th>
+                        <th class="text-left p-5 text-white/50 font-medium text-xs uppercase tracking-wider">Actions</th>
+                    </tr></thead>
+                    <tbody id="sched-list-body"></tbody>
+                </table>
+            </div>
+        </div>
+        <div id="sched-view-conflicts" class="hidden"><div id="sched-conflicts-body" class="space-y-3"></div></div>
+    </div>
+
+    <!-- ══════════════════════════════════════
+         ABOUT SECTION
+    ══════════════════════════════════════ -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-left">
+                <span class="about-eyebrow">About the Project</span>
+                <h2 class="about-heading">Built for Pangasinan State University</h2>
+                <p class="about-lead">Navi Track was created by frontend developers and PSU students to solve real campus pain points: lost time finding rooms, clashing schedules, and manual lab attendance sheets.</p>
+                <div class="about-divider"></div>
+                <p class="about-version">Version 2.4 &nbsp;·&nbsp; May 2026</p>
+                <div class="about-problem">
+                    <span class="about-problem-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        Problem Statement
+                    </span>
+                    <p class="about-problem-text">PSU Bayambang students and faculty face three recurring challenges: navigating unfamiliar classrooms, resolving schedule conflicts, and maintaining paper-based lab attendance records. Navi Track eliminates all three through a unified, no-download-required web platform built around PSU's blue-and-gold identity.</p>
+                </div>
+            </div>
+            <div class="about-right">
+                <div class="about-meta-grid">
+                    <div class="about-meta-card"><span class="meta-label">System Analysis and Design Period</span><span class="meta-value">A.Y. 2025 – 2026</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Course / Section</span><span class="meta-value">BSIT-WMT-2-1</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Campus</span><span class="meta-value">PSU Bayambang</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Sub-systems</span><span class="meta-value">2 Modules</span></div>
+                </div>
+                <div class="about-subsystems">
+                    <p class="about-block-label">Core Sub-systems</p>
+                    <div class="subsystem-card">
+                        <div class="subsystem-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div class="subsystem-info"><span class="subsystem-name">CampusNav 2</span><span class="subsystem-desc">Interactive room locator and real-time class scheduling viewer for students and faculty.</span></div>
+                    </div>
+                    <div class="subsystem-card">
+                        <div class="subsystem-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M17 17h3v3h-3z"/><path d="M14 20h3"/></svg></div>
+                        <div class="subsystem-info"><span class="subsystem-name">BSIT SmartLog</span><span class="subsystem-desc">QR-based lab attendance tracking system with automated logging and export support.</span></div>
+                    </div>
+                </div>
+                <div class="about-stack">
+                    <p class="about-block-label">Tech Stack</p>
+                    <div class="stack-pills">
+                        <span class="stack-pill gold">HTML</span><span class="stack-pill gold">CSS</span><span class="stack-pill gold">JavaScript</span><span class="stack-pill gold">MySQL</span><span class="stack-pill gold">PHP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="about-team-section">
+            <p class="about-block-label centered">Development Team</p>
+            <div class="team-grid">
+                <div class="team-card"><div class="team-avatar">JV</div><div class="team-info"><span class="team-name">Joshua Vince Junio II</span><span class="team-role">Frontend Developer · UI/UX Design</span></div></div>
+                <div class="team-card"><div class="team-avatar">EJ</div><div class="team-info"><span class="team-name">Elijah Josh Fajardo</span><span class="team-role">Backend Developer · Database/Logic</span></div></div>
+                <div class="team-card"><div class="team-avatar">VI</div><div class="team-info"><span class="team-name">Viktor Isaac Arcega</span><span class="team-role">Thesis Papers · Troubleshooting</span></div></div>
+                <div class="team-card"><div class="team-avatar">JI</div><div class="team-info"><span class="team-name">Jesreel Ignacio Calimlim</span><span class="team-role">Figma · Thesis Papers</span></div></div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+    <script src="mainuser.js"></script>
+    <script src="profile.js"></script>
+    <script src="scanner.js"></script>
+</body>
+</html>

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NaviTrack — Smart Campus Navigation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css.css">
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor-dot"></div>
+<div id="cursor-ring"></div>
+
+<!-- Animated canvas background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Mobile nav overlay -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true">
+  <button class="mobile-nav-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <a href="#hero">Home</a>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#cta">Get Started</a>
+</div>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav id="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <div class="nav-logo-icon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="3" fill="white"/>
+            <path d="M10 2L10 5M10 15L10 18M2 10L5 10M15 10L18 10" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="10" cy="10" r="7" stroke="rgba(255,255,255,0.4)" stroke-width="1" stroke-dasharray="3 3"/>
+          </svg>
+        </div>
+        NaviTrack
+      </a>
+      <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#cta" class="nav-cta">Get Started</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     SECTION 1 — HERO
+============================================================ -->
+<section id="hero" aria-labelledby="hero-headline">
+
+  <!-- Background orbs -->
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <!-- Animated route SVG -->
+  <svg class="hero-route-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="routeGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#22D3EE" stop-opacity="0.6"/>
+      </linearGradient>
+    </defs>
+    <!-- Grid lines -->
+    <line x1="0" y1="200" x2="1440" y2="200" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="0" y1="400" x2="1440" y2="400" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="0" y1="600" x2="1440" y2="600" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="240" y1="0" x2="240" y2="900" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="480" y1="0" x2="480" y2="900" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="720" y1="0" x2="720" y2="900" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="960" y1="0" x2="960" y2="900" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <line x1="1200" y1="0" x2="1200" y2="900" stroke="rgba(59,130,246,0.06)" stroke-width="1"/>
+    <!-- Route paths -->
+    <path class="route-path" d="M 0 450 Q 360 200 720 450 Q 1080 700 1440 450"/>
+    <path class="route-path" d="M 0 300 C 200 100 400 600 720 300 C 1040 0 1240 500 1440 300" style="animation-delay:-3s"/>
+    <path class="route-path-glow" d="M 0 450 Q 360 200 720 450 Q 1080 700 1440 450"/>
+  </svg>
+
+  <!-- Badge -->
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Live Campus Intelligence
+  </div>
+
+  <!-- Animated logo -->
+  <div class="hero-logo-wrap" aria-hidden="true">
+    <div class="hero-logo-ring"></div>
+    <div class="hero-logo-ring-2"></div>
+    <div class="hero-logo-core">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="6" fill="white"/>
+        <path d="M20 6L20 11M20 29L20 34M6 20L11 20M29 20L34 20" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="20" cy="20" r="14" stroke="rgba(255,255,255,0.35)" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <circle cx="20" cy="6" r="2.5" fill="rgba(255,255,255,0.7)"/>
+        <circle cx="34" cy="20" r="2.5" fill="rgba(255,255,255,0.5)"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- Headline -->
+  <h1 class="hero-headline" id="hero-headline">
+    NaviTrack: Intelligent Campus Navigation System<br/>
+    <span class="gradient-text">The Future of Campus Navigation Starts Here</span>
+  </h1>
+
+  <!-- Subtitle -->
+  <p class="hero-sub">
+   Find rooms, check schedules, verify locations with QR codes, and explore your campus effortlessly with NaviTrack.
+  </p>
+
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-hint-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     FEATURES STRIP
+============================================================ -->
+<div id="features-strip" aria-label="Feature highlights">
+  <div class="container" style="overflow:hidden;">
+    <div class="strip-track" aria-hidden="true">
+      <!-- Items repeated for seamless loop -->
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#3B82F6" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#3B82F6"/></svg></div>Real-Time Navigation</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="#22D3EE" stroke-width="1.5"/><path d="M5 7H9M7 5V9" stroke="#22D3EE" stroke-width="1.2" stroke-linecap="round"/></svg></div>Room QR Verification</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.8 5.5L13.5 5.5L9.8 8.3L11.3 13L7 10.2L2.7 13L4.2 8.3L0.5 5.5L5.2 5.5Z" stroke="#3B82F6" stroke-width="1.2" stroke-linejoin="round"/></svg></div>Smart Scheduling</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7C2 4.24 4.24 2 7 2C9.76 2 12 4.24 12 7M5 10.5C5.6 11.4 6.7 12 8 12" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round"/></svg></div>Live Occupancy</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 4.5H13M3 1V4M11 1V4M1 7.5H7M1 1H13V13H1Z" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg></div>Class Timetables</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L5 8L8 10L12 2" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Analytics Dashboard</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2C9.76 2 12 4.24 12 7S9.76 12 7 12S2 9.76 2 7S4.24 2 7 2Z" stroke="#3B82F6" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Conflict Detection</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10V12H4L11 5L9 3L2 10Z" stroke="#22D3EE" stroke-width="1.3" stroke-linejoin="round"/></svg></div>Admin Controls</div>
+      <!-- Duplicate for seamless marquee -->
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#3B82F6" stroke-width="1.5"/><circle cx="7" cy="7" r="2" fill="#3B82F6"/></svg></div>Real-Time Navigation</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="2" width="10" height="10" rx="2" stroke="#22D3EE" stroke-width="1.5"/><path d="M5 7H9M7 5V9" stroke="#22D3EE" stroke-width="1.2" stroke-linecap="round"/></svg></div>Room QR Verification</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.8 5.5L13.5 5.5L9.8 8.3L11.3 13L7 10.2L2.7 13L4.2 8.3L0.5 5.5L5.2 5.5Z" stroke="#3B82F6" stroke-width="1.2" stroke-linejoin="round"/></svg></div>Smart Scheduling</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7C2 4.24 4.24 2 7 2C9.76 2 12 4.24 12 7M5 10.5C5.6 11.4 6.7 12 8 12" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round"/></svg></div>Live Occupancy</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 4.5H13M3 1V4M11 1V4M1 7.5H7M1 1H13V13H1Z" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round"/></svg></div>Class Timetables</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L5 8L8 10L12 2" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Analytics Dashboard</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2C9.76 2 12 4.24 12 7S9.76 12 7 12S2 9.76 2 7S4.24 2 7 2Z" stroke="#3B82F6" stroke-width="1.5"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#3B82F6" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Conflict Detection</div>
+      <div class="strip-item"><div class="strip-icon"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 10V12H4L11 5L9 3L2 10Z" stroke="#22D3EE" stroke-width="1.3" stroke-linejoin="round"/></svg></div>Admin Controls</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECTION 2 — DASHBOARD
+============================================================ -->
+<section id="dashboard" aria-labelledby="dashboard-title">
+  <div class="container">
+
+    <div class="dashboard-header reveal">
+      <div class="section-tag">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="5" cy="5" r="2" fill="currentColor"/></svg>
+        Student Dashboard
+      </div>
+      <h2 class="section-title" id="dashboard-title">
+        Your Campus,<br/>
+        <span class="gradient-text">Always in Sync</span>
+      </h2>
+      <p class="section-sub">
+        See your full day at a glance — current class, upcoming sessions, room assignments, and live occupancy, all updated in real time.
+      </p>
+    </div>
+
+    <!-- Dashboard UI -->
+    <div class="dashboard-shell reveal reveal-delay-2">
+
+      <!-- Window chrome -->
+      <div class="dash-chrome">
+        <div class="chrome-dots">
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+          <div class="chrome-dot"></div>
+        </div>
+        <span class="chrome-title">NaviTrack — Student View · Academic Hall Campus</span>
+        <span class="chrome-status">System Live Demo/Preview</span>
+      </div>
+
+      <!-- Grid -->
+      <div class="dash-grid">
+
+        <!-- Sidebar -->
+        <aside class="dash-sidebar" aria-label="Navigation sidebar">
+          <div class="sidebar-date" id="dash-date">Monday, June 2</div>
+          <div class="sidebar-clock" id="dash-clock" aria-live="polite">--:--</div>
+
+          <div class="sidebar-section-label">Navigate</div>
+
+          <div class="sidebar-nav-item active" tabindex="0" role="button">
+            <div class="sidebar-nav-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="5" height="5" rx="1" stroke="#60A5FA" stroke-width="1.3"/><rect x="8" y="1" width="5" height="5" rx="1" stroke="#60A5FA" stroke-width="1.3"/><rect x="1" y="8" width="5" height="5" rx="1" stroke="#60A5FA" stroke-width="1.3"/><rect x="8" y="8" width="5" height="5" rx="1" stroke="#60A5FA" stroke-width="1.3"/></svg>
+            </div>
+            Dashboard
+          </div>
+          <div class="sidebar-nav-item" tabindex="0" role="button">
+            <div class="sidebar-nav-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 4.5H13M3 1V4M11 1V4M1 1H13V13H1Z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+            </div>
+            Block Schedule
+          </div>
+          <div class="sidebar-nav-item" tabindex="0" role="button">
+            <div class="sidebar-nav-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1C4.24 1 2 3.24 2 6C2 9.5 7 13 7 13C7 13 12 9.5 12 6C12 3.24 9.76 1 7 1Z" stroke="currentColor" stroke-width="1.3"/><circle cx="7" cy="6" r="1.5" fill="currentColor"/></svg>
+            </div>
+            Room Finder
+          </div>
+          <div class="sidebar-nav-item" tabindex="0" role="button">
+            <div class="sidebar-nav-icon">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 12L5 8L8 10L12 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Analytics
+          </div>
+
+          <div class="sidebar-section-label">Quick Stats</div>
+          <div style="padding:8px;display:flex;flex-direction:column;gap:8px;">
+            <div style="background:rgba(59,130,246,0.07);border:1px solid rgba(59,130,246,0.18);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.7rem;color:var(--text-faint);margin-bottom:3px;">Classes Today</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--blue-bright);">5</div>
+            </div>
+            <div style="background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.15);border-radius:8px;padding:10px 12px;">
+              <div style="font-size:0.7rem;color:var(--text-faint);margin-bottom:3px;">Rooms Free Now</div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-size:1.2rem;font-weight:700;color:var(--cyan);" id="rooms-free">14</div>
+            </div>
+          </div>
+        </aside>
+
+       
+            
+<!-- Main content -->
+<main class="dash-main" aria-label="Schedule view">
+
+    <div class="dash-main-header">
+        <div class="dash-main-title">Today's Schedule</div>
+
+        <div class="countdown-pill" aria-live="polite" id="countdown-display">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M6 3V6L8 7.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+            </svg>
+            <span id="countdown-text">Next class in --:--</span>
+        </div>
+    </div>
+
+    <div class="schedule-list" id="schedule-list" aria-label="Class schedule">
+
+        <!-- Card 1 -->
+        <div class="sched-card reveal reveal-delay-3">
+            <div class="sched-time">7:00 – 9:00 AM</div>
+
+            <div class="sched-info">
+                <div class="sched-course">Web Development</div>
+
+                <div class="sched-meta">
+                    <span>WD101</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Prof. Puto</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Lab</span>
+                </div>
+            </div>
+
+            <div class="sched-room-badge">
+                Lab 1
+                <span class="room-floor">Floor 1</span>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="sched-card past reveal" aria-label="Past class">
+            <div class="sched-time">9:00 – 11:00 AM</div>
+
+            <div class="sched-info">
+                <div class="sched-course">Information Management 1</div>
+
+                <div class="sched-meta">
+                    <span>CC105</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Prof. Caralos</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Lecture</span>
+                </div>
+            </div>
+
+            <div class="sched-room-badge">
+                ROOM 106
+                <span class="room-floor">Floor 2</span>
+            </div>
+        </div>
+
+        <!-- Card 3 - Current -->
+        <div class="sched-card current" aria-label="Current class, in progress">
+            <div class="sched-time">1:00 - 3:00 PM</div>
+
+            <div class="sched-info">
+                <div class="sched-course">
+                    Multimedia Technologies
+                </div>
+
+                <div class="sched-meta">
+                    <span>MT101</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Prof. Salosagcol</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Lab</span>
+                </div>
+            </div>
+
+            <div class="live-chip">Live</div>
+
+            <div class="sched-room-badge">
+                Lab 1
+                <span class="room-floor">Floor 1</span>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="sched-card upcoming reveal reveal-delay-1" aria-label="Upcoming class">
+            <div class="sched-time">3:00 - 4:00 PM</div>
+
+            <div class="sched-info">
+                <div class="sched-course">Human Computer Interaction</div>
+
+                <div class="sched-meta">
+                    <span>HCI2</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Prof. Pagdanganan</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Lecture</span>
+                </div>
+            </div>
+
+            <div class="sched-room-badge">
+                Lab 2
+                <span class="room-floor">Floor 1</span>
+            </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="sched-card reveal reveal-delay-2">
+            <div class="sched-time">4:00 - 5:00 PM</div>
+
+            <div class="sched-info">
+                <div class="sched-course">System Analysis and Design</div>
+
+                <div class="sched-meta">
+                    <span>SAD101</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Prof. Peoro</span>
+                    <div class="sched-meta-dot"></div>
+                    <span>Lecture</span>
+                </div>
+            </div>
+
+            <div class="sched-room-badge">
+                Room 106
+                <span class="room-floor">Floor 1</span>
+            </div>
+        </div>
+
+    </div>
+
+</main>
+
+        <!-- Right panel -->
+        <aside class="dash-right" aria-label="Room and occupancy info">
+          <div>
+            <div class="dash-panel-label">Current Room preview</div>
+            <!-- Mini floor map SVG -->
+            <div class="mini-map" aria-label="Floor map showing room SH-108">
+              <svg class="mini-map-svg" viewBox="0 0 200 130" fill="none">
+                <!-- Floor plan rooms -->
+                <rect x="5" y="5" width="190" height="120" rx="4" fill="rgba(59,130,246,0.04)" stroke="rgba(59,130,246,0.15)" stroke-width="1"/>
+                <!-- Rooms -->
+                <rect x="12" y="12" width="55" height="40" rx="3" fill="rgba(59,130,246,0.08)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+                <text x="39" y="36" text-anchor="middle" fill="rgba(148,163,184,0.6)" font-size="7" font-family="Space Grotesk">ROOM 106</text>
+                <!-- Current room highlighted -->
+                <rect x="75" y="12" width="55" height="40" rx="3" fill="rgba(59,130,246,0.2)" stroke="#3B82F6" stroke-width="1.5"/>
+                <text x="102" y="30" text-anchor="middle" fill="#60A5FA" font-size="7" font-family="Space Grotesk" font-weight="bold">ROOM 107</text>
+                <text x="102" y="42" text-anchor="middle" fill="rgba(96,165,250,0.7)" font-size="6" font-family="Space Grotesk">YOU ARE HERE</text>
+                <circle cx="102" cy="35" r="3" fill="#3B82F6" opacity="0.8">
+                  <animate attributeName="r" values="3;6;3" dur="2s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.8;0.2;0.8" dur="2s" repeatCount="indefinite"/>
+                </circle>
+                <rect x="138" y="12" width="48" height="40" rx="3" fill="rgba(59,130,246,0.04)" stroke="rgba(59,130,246,0.12)" stroke-width="1"/>
+                <text x="162" y="36" text-anchor="middle" fill="rgba(148,163,184,0.5)" font-size="7" font-family="Space Grotesk">LAB 3</text>
+                <!-- Hallway -->
+                <rect x="12" y="57" width="174" height="16" rx="2" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+                <text x="99" y="69" text-anchor="middle" fill="rgba(148,163,184,0.3)" font-size="6" font-family="Space Grotesk">HALLWAY</text>
+                <!-- Lower rooms -->
+                <rect x="12" y="79" width="55" height="40" rx="3" fill="rgba(59,130,246,0.04)" stroke="rgba(59,130,246,0.12)" stroke-width="1"/>
+                <text x="39" y="103" text-anchor="middle" fill="rgba(148,163,184,0.5)" font-size="7" font-family="Space Grotesk">ROOM 102</text>
+                <rect x="75" y="79" width="55" height="40" rx="3" fill="rgba(34,211,238,0.06)" stroke="rgba(34,211,238,0.15)" stroke-width="1"/>
+                <text x="102" y="103" text-anchor="middle" fill="rgba(34,211,238,0.5)" font-size="7" font-family="Space Grotesk">LAB 2</text>
+                <rect x="138" y="79" width="48" height="40" rx="3" fill="rgba(59,130,246,0.04)" stroke="rgba(59,130,246,0.12)" stroke-width="1"/>
+                <text x="162" y="103" text-anchor="middle" fill="rgba(148,163,184,0.5)" font-size="7" font-family="Space Grotesk">ROOM 103</text>
+                <!-- Navigation path -->
+                <path d="M102 57 L102 52 L130 52 L130 35 L130 35" stroke="#22D3EE" stroke-width="0.8" stroke-dasharray="3 2" opacity="0.5">
+                  <animate attributeName="stroke-dashoffset" from="0" to="-20" dur="2s" repeatCount="indefinite"/>
+                </path>
+              </svg>
+            </div>
+          </div>
+
+          <div>
+            <div class="dash-panel-label">Room Occupancy</div>
+            <div class="quick-stat">
+              <div class="qs-value green" id="occ-value">98%</div>
+              <div class="qs-label">RM-107 · 40/43 seats</div>
+              <div class="occ-bar-wrap" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+                <div class="occ-bar-fill" id="occ-bar" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="dash-panel-label">Next Room</div>
+            <div class="quick-stat">
+              <div class="qs-value" style="font-size:1.2rem;">LAB 1</div>
+              <div class="qs-label">CAST · Floor 1</div>
+              <div style="margin-top:8px;font-size:0.75rem;color:var(--cyan);display:flex;align-items:center;gap:5px;">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.34 1 2 2.34 2 4C2 6.5 5 9 5 9C5 9 8 6.5 8 4C8 2.34 6.66 1 5 1Z" stroke="currentColor" stroke-width="1"/><circle cx="5" cy="4" r="1" fill="currentColor"/></svg>
+                ~2 min walk
+              </div>
+            </div>
+          </div>
+        </aside>
+
+      </div><!-- /.dash-grid -->
+    </div><!-- /.dashboard-shell -->
+  </div>
+</section>
+
+<!-- ============================================================
+     SECTION 3 — CTA
+============================================================ -->
+<section id="cta" aria-labelledby="cta-headline">
+  <div class="container">
+    <div class="cta-panel reveal">
+
+      <!-- Animated grid -->
+      <svg class="cta-grid-svg" viewBox="0 0 1100 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="ctaGridGrad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#3B82F6" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#22D3EE" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <!-- Vertical lines -->
+        <line x1="100" y1="0" x2="100" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="220" y1="0" x2="220" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="340" y1="0" x2="340" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="460" y1="0" x2="460" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="580" y1="0" x2="580" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="700" y1="0" x2="700" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="820" y1="0" x2="820" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="940" y1="0" x2="940" y2="400" stroke="white" stroke-width="0.5"/>
+        <line x1="1060" y1="0" x2="1060" y2="400" stroke="white" stroke-width="0.5"/>
+        <!-- Horizontal lines -->
+        <line x1="0" y1="80" x2="1100" y2="80" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="160" x2="1100" y2="160" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="240" x2="1100" y2="240" stroke="white" stroke-width="0.5"/>
+        <line x1="0" y1="320" x2="1100" y2="320" stroke="white" stroke-width="0.5"/>
+        <!-- Route highlight -->
+        <path d="M0 200 Q275 80 550 200 Q825 320 1100 200" stroke="url(#ctaGridGrad)" stroke-width="1.5" fill="none" stroke-dasharray="8 5" opacity="0.8">
+          <animate attributeName="stroke-dashoffset" from="0" to="-200" dur="6s" repeatCount="indefinite"/>
+        </path>
+        <!-- Nodes -->
+        <circle cx="100" cy="200" r="3" fill="#3B82F6" opacity="0.7"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="3s" repeatCount="indefinite"/></circle>
+        <circle cx="340" cy="120" r="3" fill="#22D3EE" opacity="0.6"><animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.5s" repeatCount="indefinite"/></circle>
+        <circle cx="550" cy="200" r="4" fill="#3B82F6" opacity="0.9"><animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" repeatCount="indefinite"/></circle>
+        <circle cx="760" cy="280" r="3" fill="#22D3EE" opacity="0.6"><animate attributeName="opacity" values="0.6;0.1;0.6" dur="3.5s" repeatCount="indefinite"/></circle>
+        <circle cx="1000" cy="200" r="3" fill="#3B82F6" opacity="0.7"><animate attributeName="opacity" values="0.7;0.2;0.7" dur="2.8s" repeatCount="indefinite"/></circle>
+      </svg>
+
+      <div class="cta-orb-1" aria-hidden="true"></div>
+      <div class="cta-orb-2" aria-hidden="true"></div>
+
+      <h2 class="cta-headline" id="cta-headline">
+        Ready to Experience<br/>
+        <span class="gradient-text">Smart Campus Navigation?</span>
+      </h2>
+      <p class="cta-sub">
+        Join thousands of students and faculty who never miss a class or waste time searching for rooms again.
+      </p>
+
+      <div class="cta-actions">
+        <a href="#dashboard" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M9 2L16 9L9 16M2 9L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Launch NaviTrack
+        </a>
+        <a href="#" class="btn-secondary">Request a Demo</a>
+      </div>
+
+      <div class="cta-meta" aria-label="Additional details">
+        <div class="cta-meta-item">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2C9.76 2 12 4.24 12 7S9.76 12 7 12S2 9.76 2 7S4.24 2 7 2Z" stroke="#475569" stroke-width="1.3"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Free for students
+        </div>
+        <div class="cta-meta-item">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2C9.76 2 12 4.24 12 7S9.76 12 7 12S2 9.76 2 7S4.24 2 7 2Z" stroke="#475569" stroke-width="1.3"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          No setup required
+        </div>
+        <div class="cta-meta-item">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2C9.76 2 12 4.24 12 7S9.76 12 7 12S2 9.76 2 7S4.24 2 7 2Z" stroke="#475569" stroke-width="1.3"/><path d="M4.5 7L6.5 9L9.5 5" stroke="#475569" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Works on all devices
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+ <!-- ══════════════════════════════════════
+         ABOUT SECTION
+    ══════════════════════════════════════ -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-left">
+                <span class="about-eyebrow">About the Project</span>
+                <h2 class="about-heading">Built for Pangasinan State University</h2>
+                <p class="about-lead">Navi Track was created by frontend developers and PSU students to solve real campus pain points: lost time finding rooms, clashing schedules, and manual lab attendance sheets.</p>
+                <div class="about-divider"></div>
+                <p class="about-version">Version 2.4 &nbsp;·&nbsp; May 2026</p>
+                <div class="about-problem">
+                    <span class="about-problem-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        Problem Statement
+                    </span>
+                    <p class="about-problem-text">PSU Bayambang students and faculty face three recurring challenges: navigating unfamiliar classrooms, resolving schedule conflicts, and maintaining paper-based lab attendance records. Navi Track eliminates all three through a unified, no-download-required web platform built around PSU's blue-and-gold identity.</p>
+                </div>
+            </div>
+            <div class="about-right">
+                <div class="about-meta-grid">
+                    <div class="about-meta-card"><span class="meta-label">System Analysis and Design Period</span><span class="meta-value">A.Y. 2025 – 2026</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Course / Section</span><span class="meta-value">BSIT-WMT-2-1</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Campus</span><span class="meta-value">PSU Bayambang</span></div>
+                    <div class="about-meta-card"><span class="meta-label">Sub-systems</span><span class="meta-value">2 Modules</span></div>
+                </div>
+                <div class="about-subsystems">
+                    <p class="about-block-label">Core Sub-systems</p>
+                    <div class="subsystem-card">
+                        <div class="subsystem-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+                        <div class="subsystem-info"><span class="subsystem-name">CampusNav 2</span><span class="subsystem-desc">Interactive room locator and real-time class scheduling viewer for students and faculty.</span></div>
+                    </div>
+                    <div class="subsystem-card">
+                        <div class="subsystem-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M17 17h3v3h-3z"/><path d="M14 20h3"/></svg></div>
+                        <div class="subsystem-info"><span class="subsystem-name">BSIT SmartLog</span><span class="subsystem-desc">QR-based lab attendance tracking system with automated logging and export support.</span></div>
+                    </div>
+                </div>
+                <div class="about-stack">
+                    <p class="about-block-label">Tech Stack</p>
+                    <div class="stack-pills">
+                        <span class="stack-pill gold">HTML</span><span class="stack-pill gold">CSS</span><span class="stack-pill gold">JavaScript</span><span class="stack-pill gold">MySQL</span><span class="stack-pill gold">PHP</span>
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="about-team-section">
+            <p class="about-block-label centered">Development Team</p>
+            <div class="team-grid">
+                <div class="team-card"><div class="team-avatar">JV</div><div class="team-info"><span class="team-name">Joshua Vince Junio II</span><span class="team-role">Frontend Developer · UI/UX Design</span></div></div>
+                <div class="team-card"><div class="team-avatar">EJ</div><div class="team-info"><span class="team-name">Elijah Josh Fajardo</span><span class="team-role">Backend Developer · Database/Logic</span></div></div>
+                <div class="team-card"><div class="team-avatar">VI</div><div class="team-info"><span class="team-name">Viktor Isaac Arcega</span><span class="team-role">Thesis Papers · Troubleshooting</span></div></div>
+                <div class="team-card"><div class="team-avatar">JI</div><div class="team-info"><span class="team-name">Jesreel Ignacio Calimlim</span><span class="team-role">Figma · Thesis Papers</span></div></div>
+            </div>
+        </div>
+    </section>
+
+<script src="js.js"></script>
+</body>
+</html>
