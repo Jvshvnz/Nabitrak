@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&amp;family=Inter:wght@400;500;600&amp;display=swap');
         
-/* ============================================================
-       CUSTOM CURSOR
-    ============================================================ */
+/*CUSTOM CURSOR*/
     #cursor-dot {
       width: 8px; height: 8px;
       background: var(--cyan);

@@ -1,4 +1,3 @@
-
 const dot  = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
@@ -14,9 +13,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
 })();
 
 
-/* ============================================================
-   CANVAS BACKGROUND — network nodes
-============================================================ */
+/* CANVAS BACKGROUND — network nodes */
 (function initCanvas() {
   const canvas = document.getElementById('bg-canvas');
   const ctx    = canvas.getContext('2d');
@@ -117,18 +114,14 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
 })();
 
 
-/* ============================================================
-   NAVBAR SCROLL
-============================================================ */
+/* NAVBAR SCROLL */
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
 }, {passive: true});
 
 
-/* ============================================================
-   MOBILE MENU
-============================================================ */
+/* MOBILE MENU */
 const hamburger  = document.getElementById('hamburger');
 const mobileNav  = document.getElementById('mobileNav');
 const mobileClose= document.getElementById('mobileClose');
@@ -145,9 +138,7 @@ mobileNav.querySelectorAll('a').forEach(a => {
 });
 
 
-/* ============================================================
-   LIVE CLOCK
-============================================================ */
+/* LIVE CLOCK */
 function padZ(n) { return String(n).padStart(2,'0'); }
 
 function updateClock() {
@@ -183,9 +174,7 @@ setInterval(updateClock, 1000);
 updateClock();
 
 
-/* ============================================================
-   SCROLL REVEAL
-============================================================ */
+/* SCROLL REVEAL */
 const reveals = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -198,9 +187,7 @@ const revealObserver = new IntersectionObserver((entries) => {
 reveals.forEach(el => revealObserver.observe(el));
 
 
-/* ============================================================
-   ANIMATED COUNTERS
-============================================================ */
+/* ANIMATED COUNTERS */
 function animateCounter(el, target, duration, suffix) {
   const start = performance.now();
   const isLarge = target >= 1000;
@@ -233,9 +220,7 @@ const statObserver = new IntersectionObserver((entries) => {
 statNumbers.forEach(el => statObserver.observe(el));
 
 
-/* ============================================================
-   OCCUPANCY BAR ANIMATION
-============================================================ */
+/* OCCUPANCY BAR ANIMATION */
 const occBar = document.getElementById('occ-bar');
 const occBarObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -248,9 +233,7 @@ const occBarObserver = new IntersectionObserver((entries) => {
 if (occBar) occBarObserver.observe(occBar);
 
 
-/* ============================================================
-   PARALLAX on hero orbs (mouse move)
-============================================================ */
+/* PARALLAX on hero orbs (mouse move) */
 document.addEventListener('mousemove', e => {
   const nx = (e.clientX / window.innerWidth  - 0.5) * 2;
   const ny = (e.clientY / window.innerHeight - 0.5) * 2;
@@ -261,9 +244,7 @@ document.addEventListener('mousemove', e => {
 });
 
 
-/* ============================================================
-   ROOMS FREE COUNTER (random fluctuation for feel)
-============================================================ */
+/* ROOMS FREE COUNTER */
 const roomsFreeEl = document.getElementById('rooms-free');
 if (roomsFreeEl) {
   setInterval(() => {

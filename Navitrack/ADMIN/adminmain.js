@@ -2,7 +2,9 @@ const dot  = document.getElementById('cursor-dot');
 const ring = document.getElementById('cursor-ring');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
+
 document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
 
 (function animCursor() {
   rx += (mx - rx) * 0.18;
@@ -11,7 +13,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
   if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
   requestAnimationFrame(animCursor);
 })();
-// ====================== LOADING SCREEN ======================
+//Loading Screen
 const loadingSteps = [
     { pct: 18,  label: "Initializing"    },
     { pct: 38,  label: "Loading modules" },
@@ -21,7 +23,9 @@ const loadingSteps = [
     { pct: 100, label: "Done"            },
 ];
 
+
 let stepIndex = 0;
+
 
 function runLoadingStep() {
     if (stepIndex >= loadingSteps.length) return;
@@ -38,26 +42,30 @@ function runLoadingStep() {
     }
 }
 
+
 function finishLoading() {
     const screen = document.getElementById('loading-screen');
     screen.classList.add('fade-out');
     setTimeout(() => {
         screen.style.display = 'none';
-        // Direct na ipakita ang admin panel, walang login
+        //Direct na ipakita ang admin panel, walang login
         document.getElementById('admin-panel').classList.remove('hidden');
         showPage('dashboard');
     }, 680);
 }
+
 
 window.onload = function () {
     setTimeout(runLoadingStep, 600);
 };
 
 
-// ====================== PAGE NAVIGATION ======================
+
+//Page Navigation
 function showPage(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
     document.getElementById('page-' + page).classList.remove('hidden');
+
 
     document.querySelectorAll('.admin-nav-item').forEach(item => item.classList.remove('active'));
     const activeLink = Array.from(document.querySelectorAll('.admin-nav-item'))
@@ -66,12 +74,14 @@ function showPage(page) {
 }
 
 
-// ====================== LOGIN ======================
+
+//Login
 function adminLogin() {
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('admin-panel').classList.remove('hidden');
     showPage('dashboard');
 }
+
 
 function logout() {
     if (confirm("Logout from Admin Portal?")) {
@@ -81,18 +91,32 @@ function logout() {
 }
 
 
-// ====================== MODAL HELPERS ======================
+
+//Modal Helpers
 function openRoomModal() {
     document.getElementById('modal-room').classList.add('open');
 }
+
 
 function openScheduleModal() {
     document.getElementById('modal-schedule').classList.add('open');
 }
 
+
+function openEditUser(userId, name, role, email, status) {
+    document.getElementById('edit-user-id').value = userId;
+    document.getElementById('edit-user-name').value = name;
+    document.getElementById('edit-user-role').value = role;
+    document.getElementById('edit-user-email').value = email;
+    document.getElementById('edit-user-status').value = status;
+    document.getElementById('modal-edit-user').classList.add('open');
+}
+
+
 function closeModal(id) {
     document.getElementById(id).classList.remove('open');
 }
+
 
 function closeOnOverlay(e, id) {
     if (e.target === document.getElementById(id)) {
@@ -100,32 +124,29 @@ function closeOnOverlay(e, id) {
     }
 }
 
+
 function submitRoom() {
     const name     = document.getElementById('room-name').value.trim();
     const building = document.getElementById('room-building').value;
     const course   = document.getElementById('room-course').value;
+
 
     if (!name || !building || !course) {
         alert('Please fill in all fields.');
         return;
     }
 
-    // TODO: Replace with your fetch() call to PHP backend
-    // Example:
-    // fetch('save_room.php', {
-    //     method: 'POST',
-    //     body: new FormData(/* ... */),
-    // });
 
     console.log('Room saved:', { name, building, course });
     alert('Room "' + name + '" saved successfully!');
     closeModal('modal-room');
 
-    // Clear fields
+
     document.getElementById('room-name').value = '';
     document.getElementById('room-building').value = '';
     document.getElementById('room-course').value = '';
 }
+
 
 function submitSchedule() {
     const room       = document.getElementById('sched-room').value;
@@ -135,18 +156,18 @@ function submitSchedule() {
     const timein     = document.getElementById('sched-timein').value;
     const timeout    = document.getElementById('sched-timeout').value;
 
+
     if (!room || !subject || !instructor || !day || !timein || !timeout) {
         alert('Please fill in all fields.');
         return;
     }
 
-    // TODO: Replace with your fetch() call to PHP backend
 
     console.log('Schedule saved:', { room, subject, instructor, day, timein, timeout });
     alert('Schedule saved successfully!');
     closeModal('modal-schedule');
 
-    // Clear fields
+
     document.getElementById('sched-room').value = '';
     document.getElementById('sched-subject').value = '';
     document.getElementById('sched-instructor').value = '';
@@ -156,10 +177,32 @@ function submitSchedule() {
 }
 
 
-// ====================== USERS ======================
+function submitEditUser() {
+    const userId = document.getElementById('edit-user-id').value;
+    const name   = document.getElementById('edit-user-name').value.trim();
+    const role   = document.getElementById('edit-user-role').value;
+    const email  = document.getElementById('edit-user-email').value.trim();
+    const status = document.getElementById('edit-user-status').value;
+
+
+    if (!name || !role || !email || !status) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+
+    console.log('User updated:', { userId, name, role, email, status });
+    alert('User "' + name + '" updated successfully!');
+    closeModal('modal-edit-user');
+}
+
+
+
+//Users
 function addNewUser() {
     alert("Add New User form — connect to your PHP backend.");
 }
+
 
 function searchUsers() {
     const query = document.getElementById('user-search').value.toLowerCase();
@@ -171,7 +214,45 @@ function searchUsers() {
 }
 
 
-// ====================== INIT ======================
+
+//Init
 document.addEventListener('DOMContentLoaded', () => {
-    // Any extra init here
+    //Sample users data (palitan mo ng dynamic data mula sa database)
+    const users = [
+        { id: '24-BGU-6969', name: 'PEPITO MANALOTO', role: 'Admin', email: '69YUMMYALLTHEWAYYUMMY@GMAIL.COM', status: 'Active' },
+        { id: '24-BGU-1234', name: 'MARIA CLARA', role: 'Faculty', email: 'MARIA@GMAIL.COM', status: 'Active' },
+        { id: '24-BGU-5678', name: 'PEDRO SANTOS', role: 'Student', email: 'PEDRO@GMAIL.COM', status: 'Inactive' },
+    ];
+
+
+    const tbody = document.getElementById('users-body');
+    tbody.innerHTML = '';
+
+
+    users.forEach(user => {
+        const row = document.createElement('tr');
+        row.className = 'border-b border-white/5 hover:bg-white/5 transition';
+        row.innerHTML = `
+            <td class="p-6">${user.id}</td>
+            <td class="p-6">${user.name}</td>
+            <td class="p-6">${user.role}</td>
+            <td class="p-6">${user.email}</td>
+            <td class="p-6 text-center">
+                <span class="px-4 py-2 rounded-full text-sm ${
+                    user.status === 'Active' 
+                        ? 'bg-green-500/20 text-green-400' 
+                        : 'bg-red-500/20 text-red-400'
+                }">
+                    ${user.status}
+                </span>
+            </td>
+            <td class="p-6 text-center">
+                <button onclick="openEditUser('${user.id}', '${user.name}', '${user.role}', '${user.email}', '${user.status}')"
+                        class="px-4 py-2 bg-[#E8B923] text-[#0A2540] rounded-xl text-sm font-semibold hover:bg-white transition">
+                    Edit
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
 });

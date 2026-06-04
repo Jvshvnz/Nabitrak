@@ -1,8 +1,4 @@
-
-    /* ============================================================
-       CSS VARIABLES & RESET
-    ============================================================ */
-    :root {
+:root {
       --blue:        #3B82F6;
       --blue-bright: #60A5FA;
       --cyan:        #22D3EE;
@@ -35,9 +31,7 @@
       cursor: none;
     }
 
-    /* ============================================================
-       CUSTOM CURSOR
-    ============================================================ */
+    /* CUSTOM CURSOR */
     #cursor-dot {
       width: 8px; height: 8px;
       background: var(--cyan);
@@ -62,9 +56,7 @@
       border-color: var(--blue);
     }
 
-    /* ============================================================
-       CANVAS BACKGROUND
-    ============================================================ */
+    /* CANVAS BACKGROUND */
     #bg-canvas {
       position: fixed;
       top: 0; left: 0;
@@ -73,9 +65,7 @@
       opacity: 0.6;
     }
 
-    /* ============================================================
-       SCROLLBAR
-    ============================================================ */
+    /* SCROLLBAR */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg-dark); }
     ::-webkit-scrollbar-thumb {
@@ -83,18 +73,14 @@
       border-radius: 4px;
     }
 
-    /* ============================================================
-       TYPOGRAPHY
-    ============================================================ */
+    /* TYPOGRAPHY */
     h1,h2,h3,h4 {
       font-family: 'Space Grotesk', sans-serif;
       letter-spacing: -0.02em;
       line-height: 1.1;
     }
 
-    /* ============================================================
-       LAYOUT
-    ============================================================ */
+    /* LAYOUT */
     .container {
       max-width: 1200px;
       margin: 0 auto;
@@ -102,9 +88,7 @@
     }
     section { position: relative; z-index: 1; }
 
-    /* ============================================================
-       NAVBAR
-    ============================================================ */
+    /* NAVBAR */
     nav {
       position: fixed; top: 0; left: 0; right: 0;
       z-index: 100;
@@ -171,9 +155,7 @@
       border-radius: 2px; transition: var(--transition);
     }
 
-    /* ============================================================
-       SECTION 1 — HERO
-    ============================================================ */
+    /* SECTION 1 — HERO */
     #hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
@@ -421,9 +403,7 @@
       background: var(--border);
     }
 
-    /* ============================================================
-       SHARED — SECTION HEADER
-    ============================================================ */
+    /* SHARED — SECTION HEADER */
     .section-tag {
       display: inline-flex; align-items: center; gap: 8px;
       background: rgba(34,211,238,0.08);
@@ -444,9 +424,7 @@
       max-width: 520px; line-height: 1.7;
     }
 
-    /* ============================================================
-       SHARED — REVEAL ANIMATIONS
-    ============================================================ */
+    /* SHARED — REVEAL ANIMATIONS */
     @keyframes fadeUp {
       to { opacity:1; transform:translateY(0); }
     }
@@ -472,9 +450,7 @@
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ============================================================
-       FEATURES STRIP (between hero + dashboard)
-    ============================================================ */
+    /* FEATURES STRIP */
     #features-strip {
       padding: 40px 0;
       border-top: 1px solid var(--border);
@@ -501,9 +477,7 @@
     }
     @keyframes marquee { to { transform: translateX(-50%); } }
 
-    /* ============================================================
-       SECTION 2 — DASHBOARD
-    ============================================================ */
+    /* SECTION 2 — DASHBOARD */
     #dashboard {
       padding: 100px 0;
     }
@@ -862,9 +836,7 @@
       opacity: 0.07; pointer-events: none;
     }
 
-    /* ============================================================
-       FOOTER
-    ============================================================ */
+    /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
       padding: 32px 0;
@@ -897,9 +869,7 @@
       font-size: 0.8rem; color: var(--text-faint);
     }
 
-    /* ============================================================
-       MOBILE MENU
-    ============================================================ */
+    /* MOBILE MENU */
     .mobile-nav {
       display: none;
       position: fixed; top: 0; left: 0; right: 0; bottom: 0;
@@ -923,9 +893,7 @@
       color: var(--text-muted); font-size: 1.5rem;
     }
 
-    /* ============================================================
-       RESPONSIVE
-    ============================================================ */
+    /*RESPONSIVE */
     @media (max-width: 1024px) {
       .dash-grid {
         grid-template-columns: 220px 1fr;
@@ -971,9 +939,7 @@
       pointer-events: none;
       z-index: 0;
     }
-  /* ═══════════════════════════════════════════════
-   ABOUT SECTION
-═══════════════════════════════════════════════ */
+    /* ABOUT SECTION */
 .about-section {
     background-color: #0A2540;
     color: #ffffff;

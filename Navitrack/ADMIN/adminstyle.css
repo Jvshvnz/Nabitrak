@@ -1,6 +1,4 @@
-/* ============================================================
-       CUSTOM CURSOR
-    ============================================================ */
+/* Custom Cursor */
     #cursor-dot {
       width: 8px; height: 8px;
       background: var(--cyan);
@@ -28,7 +26,7 @@
 /* Fonts */
 .display-font { font-family: 'Space Grotesk', sans-serif; }
 
-/* ====================== LOADING SCREEN ====================== */
+/*Loading Screen*/
 #loading-screen {
     position: fixed;
     inset: 0;
@@ -167,7 +165,7 @@
 }
 
 
-/* ====================== SIDEBAR NAV ====================== */
+/*Sidebar Nav*/
 .admin-nav-item {
     font-family: 'Instrument Sans', sans-serif;
     color: rgba(255,255,255,0.55);
@@ -183,7 +181,7 @@
 }
 
 
-/* ====================== MODALS(NEWNEWNEWNEWNEW) ====================== */
+/*Modal*/
 .modal-overlay {
     position: fixed;
     inset: 0;

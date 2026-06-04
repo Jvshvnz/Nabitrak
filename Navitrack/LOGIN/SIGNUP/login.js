@@ -34,7 +34,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
         });
     }
 
-    // Toggle Password Visibility
+    //Toggle Password Visibility
     function togglePassword() {
         const passwordInput = document.getElementById('password');
         const eyeIcon = document.getElementById('eye-icon');
@@ -49,7 +49,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
         eyeIcon.classList.toggle('fa-eye-slash');
     }
 
-    // Handle Login
+    //Handle Login
     function handleLogin(event) {
         event.preventDefault();
 
@@ -60,7 +60,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
 
         const originalContent = button.innerHTML;
 
-        // Loading State
+        //Loading State
         button.innerHTML = `
             <div class="flex items-center justify-center gap-2">
                 <svg class="animate-spin h-5 w-5 text-white"
@@ -92,7 +92,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
         button.disabled = true;
         button.classList.add('opacity-80', 'cursor-not-allowed');
 
-        // Fake Login Delay
+        //Fake Login Delay
         setTimeout(() => {
             button.innerHTML = originalContent;
             button.disabled = false;
@@ -102,7 +102,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
                 'cursor-not-allowed'
             );
 
-            // Toast
+            //Toast
             const toast = document.getElementById('successToast');
 
             if (toast) {
@@ -117,7 +117,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
                     'opacity-100'
                 );
 
-                // Auto Hide
+                //Auto Hide
                 setTimeout(() => {
                     toast.classList.add(
                         'translate-y-10',
@@ -130,7 +130,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
                 }, 2500);
             }
 
-            // Demo Alert
+            //Demo Alert
             setTimeout(() => {
                 alert(
                     "🎉 Login Successful!\n\n" +
@@ -141,7 +141,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
         }, 1800);
     }
 
-    // Forgot Password
+    //Forgot Password
     function forgotPassword() {
         alert(
             "Password reset flow would open here.\n\n" +
@@ -149,13 +149,13 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
         );
     }
 
-    // Initialize
+    //Initialize
     window.addEventListener('DOMContentLoaded', () => {
 
-        // Default Role
+        //Default Role
         selectRole(0);
 
-        // Autofocus Input
+        //Autofocus Input
         const identifierInput = document.getElementById('identifier');
 
         if (identifierInput) {
@@ -164,7 +164,7 @@ document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; })
             }, 500);
         }
 
-        // Console Branding
+        //Console Branding
         console.log(
             '%c✨ Horizon Login UI Ready',
             `
